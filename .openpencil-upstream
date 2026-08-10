@@ -1,0 +1,5 @@
+source=https://github.com/open-pencil/open-pencil
+branch=master
+mirror_mode=playground-no-external-lfs
+excluded=tests/fixtures/
+commit=d6ec858243ae089f2f0bddb48a2742420b996ae1
