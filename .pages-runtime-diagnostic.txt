@@ -1,44 +1,54 @@
-source_sha=cd6cf86d212237d91a7ecf58d90bec728e7f2e52
+source_sha=fdbf39f4fd23535a08dab018d7f5d9f7d6b59407
 page_url=https://imonsergey.github.io/O_PEN/
 runtime_outcome=success
-updated_at=2026-08-10T15:22:00Z
+updated_at=2026-08-10T15:26:35Z
 editor_root_present=true
 boot_splash_present=false
 
 --- browser log tail ---
-[2630:2654:0810/152155.253087:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2654:0810/152155.258429:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2654:0810/152155.523150:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2630:0810/152155.564448:INFO:components/enterprise/browser/controller/chrome_browser_cloud_management_controller.cc:239] No machine level policy manager exists.
-[2630:2654:0810/152155.790841:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2665:2665:0810/152156.011985:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1655] drmGetDevices2() has not found any devices
-[2665:2665:0810/152156.039574:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.
-[2630:2650:0810/152156.242304:WARNING:chrome/browser/extensions/external_pref_loader.cc:294] You are using an old-style extension deployment method (external_extensions.json), which will soon be deprecated. (see http://developer.chrome.com/docs/extensions/how-to/distribute/install-extensions)
-[2630:2630:0810/152157.268341:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2630:0810/152157.268392:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2654:0810/152157.268422:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2654:0810/152157.268449:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2630:0810/152157.273257:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2630:0810/152157.301769:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2630:0810/152157.545696:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2630:0810/152157.556719:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2654:0810/152157.559530:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2630:0810/152157.701749:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
-[2630:2630:0810/152157.701770:WARNING:dbus/property.cc:174] GetAll request failed for: org.freedesktop.UPower.Device
-[2630:2630:0810/152157.702508:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2654:0810/152157.702587:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2630:0810/152157.797942:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2654:0810/152157.798075:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
-[2630:2630:0810/152157.941784:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
-[2630:2630:0810/152157.941804:WARNING:ui/base/idle/idle_linux.cc:111] None of the known D-Bus ScreenSaver services could be used.
-[2630:2630:0810/152159.906417:INFO:CONSOLE:5630] "wasm streaming compile failed: TypeError: Failed to execute 'compile' on 'WebAssembly': HTTP status code is not ok", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.906458:INFO:CONSOLE:5630] "falling back to ArrayBuffer instantiation", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.906904:INFO:CONSOLE:5630] "wasm streaming compile failed: TypeError: Failed to execute 'compile' on 'WebAssembly': HTTP status code is not ok", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.906946:INFO:CONSOLE:5630] "falling back to ArrayBuffer instantiation", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.952861:INFO:CONSOLE:5630] "failed to asynchronously prepare wasm: both async and sync fetching of the wasm failed", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.952901:INFO:CONSOLE:5630] "Aborted(both async and sync fetching of the wasm failed)", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.953296:INFO:CONSOLE:5630] "failed to asynchronously prepare wasm: both async and sync fetching of the wasm failed", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.953329:INFO:CONSOLE:5630] "Aborted(both async and sync fetching of the wasm failed)", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.980958:INFO:CONSOLE:5630] "Uncaught (in promise) RuntimeError: Aborted(both async and sync fetching of the wasm failed). Build with -sASSERTIONS for more info.", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2630:2630:0810/152159.985559:INFO:CONSOLE:5630] "Uncaught (in promise) RuntimeError: Aborted(both async and sync fetching of the wasm failed). Build with -sASSERTIONS for more info.", source: https://imonsergey.github.io/O_PEN/assets/tabs-Cmej6xS1.js (5630)
-[2669:2674:0810/152200.218618:WARNING:net/spdy/spdy_session.cc:3186] Received HEADERS for invalid stream 141
+[2656:2679:0810/152627.181636:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2679:0810/152627.186324:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2679:0810/152628.014865:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2692:2692:0810/152628.035718:WARNING:media/gpu/vaapi/vaapi_wrapper.cc:1655] drmGetDevices2() has not found any devices
+[2656:2656:0810/152628.059858:INFO:components/enterprise/browser/controller/chrome_browser_cloud_management_controller.cc:239] No machine level policy manager exists.
+[2692:2692:0810/152628.072009:WARNING:sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process.
+[2656:2679:0810/152628.293696:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2677:0810/152628.723750:WARNING:chrome/browser/extensions/external_pref_loader.cc:294] You are using an old-style extension deployment method (external_extensions.json), which will soon be deprecated. (see http://developer.chrome.com/docs/extensions/how-to/distribute/install-extensions)
+[2656:2656:0810/152629.819660:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2656:0810/152629.819723:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2679:0810/152629.819749:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2679:0810/152629.819762:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2656:0810/152629.828400:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2656:0810/152629.871432:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2656:0810/152630.161517:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2656:0810/152630.166909:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2679:0810/152630.166998:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2656:0810/152630.325705:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+[2656:2656:0810/152630.325726:WARNING:dbus/property.cc:174] GetAll request failed for: org.freedesktop.UPower.Device
+[2656:2656:0810/152630.326077:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2679:0810/152630.326149:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2656:0810/152630.439408:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2679:0810/152630.439532:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[2656:2656:0810/152630.550552:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+[2656:2656:0810/152630.550572:WARNING:ui/base/idle/idle_linux.cc:111] None of the known D-Bus ScreenSaver services could be used.
+[2656:2682:0810/152634.326922:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+[2692:2692:0810/152634.901352:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.
+[2692:2692:0810/152634.999329:ERROR:gpu/command_buffer/service/gl_utils.cc:430] [.WebGL-0xff4000f5c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[2656:2656:0810/152635.016127:INFO:CONSOLE:0] "[]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.", source: https://imonsergey.github.io/O_PEN/ (0)
+[2656:2656:0810/152635.021618:INFO:CONSOLE:0] "[.WebGL-0xff4000f5c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: https://imonsergey.github.io/O_PEN/ (0)
+[2692:2692:0810/152635.034367:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.
+[2692:2692:0810/152635.061657:ERROR:gpu/command_buffer/service/gl_utils.cc:430] [.WebGL-0xff4000f3800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[2656:2656:0810/152635.066461:INFO:CONSOLE:0] "[]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.", source: https://imonsergey.github.io/O_PEN/ (0)
+[2656:2656:0810/152635.066502:INFO:CONSOLE:0] "[.WebGL-0xff4000f3800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: https://imonsergey.github.io/O_PEN/ (0)
+[2656:2656:0810/152635.081670:INFO:CONSOLE:11] "OTS parsing error: invalid sfntVersion: 1008813135", source: https://imonsergey.github.io/O_PEN/assets/opentype-GNJk3Reb.js (11)
+[2656:2656:0810/152635.082041:INFO:CONSOLE:11] "Failed to load font "Inter" (Regular)", source: https://imonsergey.github.io/O_PEN/assets/opentype-GNJk3Reb.js (11)
+[2656:2656:0810/152635.089621:INFO:CONSOLE:5632] "---- failed to open <0> as a font", source: https://imonsergey.github.io/O_PEN/assets/tabs-DrGuFfUW.js (5632)
+[2692:2692:0810/152635.316514:ERROR:gpu/command_buffer/service/gl_utils.cc:430] [.WebGL-0xff4000f5c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[2656:2656:0810/152635.419593:INFO:CONSOLE:0] "[.WebGL-0xff4000f5c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels", source: https://imonsergey.github.io/O_PEN/ (0)
+[2656:2656:0810/152635.420047:INFO:CONSOLE:11] "OTS parsing error: invalid sfntVersion: 1008813135", source: https://imonsergey.github.io/O_PEN/assets/opentype-GNJk3Reb.js (11)
+[2656:2656:0810/152635.420283:INFO:CONSOLE:11] "OTS parsing error: invalid sfntVersion: 1008813135", source: https://imonsergey.github.io/O_PEN/assets/opentype-GNJk3Reb.js (11)
+[2656:2656:0810/152635.420338:INFO:CONSOLE:11] "Failed to load font "Inter" (Regular)", source: https://imonsergey.github.io/O_PEN/assets/opentype-GNJk3Reb.js (11)
+[2656:2656:0810/152635.420370:INFO:CONSOLE:11] "Failed to load font "Inter" (Regular)", source: https://imonsergey.github.io/O_PEN/assets/opentype-GNJk3Reb.js (11)
+[2656:2656:0810/152635.420540:INFO:CONSOLE:5632] "---- failed to open <0> as a font", source: https://imonsergey.github.io/O_PEN/assets/tabs-DrGuFfUW.js (5632)
+[2692:2692:0810/152635.455582:ERROR:gpu/command_buffer/service/gl_utils.cc:430] [.WebGL-0xff4000f3800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[2656:2656:0810/152635.488277:INFO:CONSOLE:0] "[.WebGL-0xff4000f3800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)", source: https://imonsergey.github.io/O_PEN/ (0)
