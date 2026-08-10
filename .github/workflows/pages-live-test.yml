@@ -48,3 +48,5 @@ jobs:
 
       - name: Print deployed URL
         run: echo "${{ steps.deployment.outputs.page_url }}"
+
+# Pages enabled in repository settings; fresh PR event retriggers deployment verification.
