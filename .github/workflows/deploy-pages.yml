@@ -47,7 +47,13 @@ jobs:
           test -f dist/index.html
           test -f dist/canvaskit.wasm
           grep -q '/O_PEN/' dist/index.html
-          echo "dist/index.html and CanvasKit runtime asset verified"
+          SCRIPT_SRC="$(grep -oE 'src="[^"]+\.js"' dist/index.html | head -1 | cut -d'"' -f2)"
+          test -n "$SCRIPT_SRC"
+          case "$SCRIPT_SRC" in
+            /O_PEN/*) ;;
+            *) echo "Unexpected entry script path: $SCRIPT_SRC" >&2; exit 1 ;;
+          esac
+          echo "dist/index.html, entry bundle path, and CanvasKit runtime asset verified"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -79,38 +85,118 @@ jobs:
           done
           grep -q '<div id="app">' /tmp/o_pen_index.html
           grep -q '/O_PEN/' /tmp/o_pen_index.html
+          SCRIPT_SRC="$(grep -oE 'src="[^"]+\.js"' /tmp/o_pen_index.html | head -1 | cut -d'"' -f2)"
+          test -n "$SCRIPT_SRC"
+          curl --fail --silent --show-error --location "https://imonsergey.github.io${SCRIPT_SRC}" -o /tmp/o_pen_entry.js
+          test -s /tmp/o_pen_entry.js
           curl --fail --silent --show-error --location "${PAGE_URL}canvaskit.wasm" -o /tmp/canvaskit.wasm
           test -s /tmp/canvaskit.wasm
           curl --fail --silent --show-error --location "${PAGE_URL}sw.js" -o /tmp/sw.js
           test -s /tmp/sw.js
-          echo "Live HTML, service worker, and CanvasKit WASM verified at $PAGE_URL"
+          echo "Live HTML, entry JavaScript, service worker, and CanvasKit WASM verified at $PAGE_URL"
+
+      - name: Verify browser runtime
+        id: browser-smoke
+        continue-on-error: true
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -uo pipefail
+          CHROME_BIN="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_BIN" ]; then
+            echo "Chrome/Chromium is unavailable on the runner" | tee /tmp/o_pen_browser.log
+            exit 1
+          fi
+          set +e
+          "$CHROME_BIN" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --enable-logging=stderr \
+            --v=0 \
+            --virtual-time-budget=15000 \
+            --dump-dom \
+            "$PAGE_URL" \
+            > /tmp/o_pen_dom.html \
+            2> /tmp/o_pen_browser.log
+          CHROME_STATUS=$?
+          set -e
+          echo "Chrome exit status: $CHROME_STATUS"
+          tail -200 /tmp/o_pen_browser.log || true
+          if [ "$CHROME_STATUS" -ne 0 ]; then
+            exit "$CHROME_STATUS"
+          fi
+          if grep -q 'data-test-id="editor-root"' /tmp/o_pen_dom.html; then
+            echo "Browser runtime mounted editor-root"
+            exit 0
+          fi
+          echo "Browser runtime did not mount editor-root" >&2
+          if grep -q 'id="boot-splash"' /tmp/o_pen_dom.html; then
+            echo "Boot splash is still present after 15 seconds" >&2
+          fi
+          exit 1
 
       - name: Print deployed URL
         run: echo "${{ steps.deployment.outputs.page_url }}"
 
-      - name: Record deployment receipt
+      - name: Record deployment receipt and runtime diagnostic
         if: always()
         shell: bash
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
           JOB_STATUS: ${{ job.status }}
           SOURCE_SHA: ${{ github.sha }}
+          RUNTIME_OUTCOME: ${{ steps.browser-smoke.outcome }}
         run: |
           NOW="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          EFFECTIVE_STATUS="$JOB_STATUS"
+          if [ "$RUNTIME_OUTCOME" != "success" ]; then
+            EFFECTIVE_STATUS="runtime-failure"
+          fi
           cat > .pages-deployment.json <<EOF
           {
-            "status": "$JOB_STATUS",
+            "status": "$EFFECTIVE_STATUS",
             "page_url": "$PAGE_URL",
             "source_sha": "$SOURCE_SHA",
+            "runtime_outcome": "$RUNTIME_OUTCOME",
             "updated_at": "$NOW"
           }
           EOF
+
+          {
+            echo "source_sha=$SOURCE_SHA"
+            echo "page_url=$PAGE_URL"
+            echo "runtime_outcome=$RUNTIME_OUTCOME"
+            echo "updated_at=$NOW"
+            if [ -f /tmp/o_pen_dom.html ]; then
+              if grep -q 'data-test-id="editor-root"' /tmp/o_pen_dom.html; then
+                echo "editor_root_present=true"
+              else
+                echo "editor_root_present=false"
+              fi
+              if grep -q 'id="boot-splash"' /tmp/o_pen_dom.html; then
+                echo "boot_splash_present=true"
+              else
+                echo "boot_splash_present=false"
+              fi
+            fi
+            echo
+            echo "--- browser log tail ---"
+            if [ -f /tmp/o_pen_browser.log ]; then
+              tail -200 /tmp/o_pen_browser.log
+            else
+              echo "browser log unavailable"
+            fi
+          } > .pages-runtime-diagnostic.txt
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .pages-deployment.json
+          git add .pages-deployment.json .pages-runtime-diagnostic.txt
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "chore: record Pages deployment [skip ci]"
+          git commit -m "chore: record Pages runtime diagnostic [skip ci]"
           git pull --rebase origin main
           git push origin HEAD:main
