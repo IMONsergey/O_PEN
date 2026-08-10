@@ -3,11 +3,6 @@ name: Deploy O_PEN to GitHub Pages
 on:
   push:
     branches: [main]
-  pull_request_target:
-    branches: [main]
-    types: [opened, synchronize, reopened]
-    paths:
-      - '.github/pages-deploy-trigger'
   workflow_dispatch:
 
 permissions:
@@ -66,6 +61,30 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Verify live Pages assets
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 12); do
+            if curl --fail --silent --show-error --location "$PAGE_URL" -o /tmp/o_pen_index.html; then
+              break
+            fi
+            if [ "$attempt" -eq 12 ]; then
+              echo "Live Pages endpoint did not become reachable" >&2
+              exit 1
+            fi
+            sleep 5
+          done
+          grep -q '<div id="app">' /tmp/o_pen_index.html
+          grep -q '/O_PEN/' /tmp/o_pen_index.html
+          curl --fail --silent --show-error --location "${PAGE_URL}canvaskit.wasm" -o /tmp/canvaskit.wasm
+          test -s /tmp/canvaskit.wasm
+          curl --fail --silent --show-error --location "${PAGE_URL}sw.js" -o /tmp/sw.js
+          test -s /tmp/sw.js
+          echo "Live HTML, service worker, and CanvasKit WASM verified at $PAGE_URL"
+
       - name: Print deployed URL
         run: echo "${{ steps.deployment.outputs.page_url }}"
 
@@ -75,7 +94,7 @@ jobs:
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
           JOB_STATUS: ${{ job.status }}
-          SOURCE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
+          SOURCE_SHA: ${{ github.sha }}
         run: |
           NOW="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           cat > .pages-deployment.json <<EOF
