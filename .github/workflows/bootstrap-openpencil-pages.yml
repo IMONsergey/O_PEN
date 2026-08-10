@@ -1,33 +1,20 @@
-name: Bootstrap OpenPencil and deploy Pages
+name: Sync OpenPencil upstream
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: false
 
 jobs:
-  bootstrap-build-deploy:
+  sync-upstream:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout O_PEN
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
+          ref: main
 
       - name: Clone upstream OpenPencil
         run: git clone --depth 1 https://github.com/open-pencil/open-pencil.git /tmp/open-pencil
@@ -48,17 +35,15 @@ jobs:
           rm -f .lfsconfig
           cat > .gitattributes <<'EOF'
           # O_PEN playground mirror: external OpenPencil Git LFS is intentionally disabled.
-          # Heavy test fixtures are excluded during bootstrap; runtime CanvasKit assets are stored normally.
+          # Heavy test fixtures are excluded during sync; runtime package assets remain available via dependencies.
           EOF
           git lfs uninstall --local || true
-          echo 'Large files remaining in playground mirror:'
-          find . -path './.git' -prune -o -type f -size +90M -print
           if find . -path './.git' -prune -o -type f -size +99M -print -quit | grep -q .; then
             echo 'A file exceeds GitHub normal Git file limits.' >&2
             exit 1
           fi
 
-      - name: Preserve bootstrap workflow and record upstream
+      - name: Record upstream revision
         shell: bash
         run: |
           cat > .openpencil-upstream <<'EOF'
@@ -69,44 +54,13 @@ jobs:
           EOF
           echo "commit=$(git -C /tmp/open-pencil rev-parse HEAD)" >> .openpencil-upstream
 
-      - name: Commit imported source
+      - name: Commit synced source
         shell: bash
-        env:
-          TARGET_BRANCH: ${{ github.event_name == 'pull_request' && github.head_ref || 'main' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "chore: import OpenPencil upstream playground"
-            git push origin HEAD:"$TARGET_BRANCH"
+            git commit -m "chore: sync OpenPencil upstream playground"
+            git push origin HEAD:main
           fi
-
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.10
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Build workspace packages
-        run: bun run build:packages
-
-      - name: Build web app for project Pages
-        run: bunx vite build --base=/O_PEN/
-
-      - name: Setup Pages
-        if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-      - name: Deploy to GitHub Pages
-        if: github.event_name != 'pull_request'
-        id: deployment
-        uses: actions/deploy-pages@v4
