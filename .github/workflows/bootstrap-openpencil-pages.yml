@@ -38,8 +38,25 @@ jobs:
           rsync -a --delete \
             --exclude='.git/' \
             --exclude='.github/workflows/' \
+            --exclude='tests/fixtures/' \
             /tmp/open-pencil/ ./
           mkdir -p .github/workflows
+
+      - name: Detach playground from upstream Git LFS
+        shell: bash
+        run: |
+          rm -f .lfsconfig
+          cat > .gitattributes <<'EOF'
+          # O_PEN playground mirror: external OpenPencil Git LFS is intentionally disabled.
+          # Heavy test fixtures are excluded during bootstrap; runtime CanvasKit assets are stored normally.
+          EOF
+          git lfs uninstall --local || true
+          echo 'Large files remaining in playground mirror:'
+          find . -path './.git' -prune -o -type f -size +90M -print
+          if find . -path './.git' -prune -o -type f -size +99M -print -quit | grep -q .; then
+            echo 'A file exceeds GitHub normal Git file limits.' >&2
+            exit 1
+          fi
 
       - name: Preserve bootstrap workflow and record upstream
         shell: bash
@@ -47,6 +64,8 @@ jobs:
           cat > .openpencil-upstream <<'EOF'
           source=https://github.com/open-pencil/open-pencil
           branch=master
+          mirror_mode=playground-no-external-lfs
+          excluded=tests/fixtures/
           EOF
           echo "commit=$(git -C /tmp/open-pencil rev-parse HEAD)" >> .openpencil-upstream
 
@@ -59,7 +78,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if ! git diff --cached --quiet; then
-            git commit -m "chore: import OpenPencil upstream"
+            git commit -m "chore: import OpenPencil upstream playground"
             git push origin HEAD:"$TARGET_BRANCH"
           fi
 
