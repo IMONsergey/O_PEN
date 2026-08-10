@@ -3,6 +3,11 @@ name: Deploy O_PEN to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/pages-deploy-trigger'
   workflow_dispatch:
 
 permissions:
@@ -21,9 +26,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Setup Bun
@@ -69,7 +75,7 @@ jobs:
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
           JOB_STATUS: ${{ job.status }}
-          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_SHA: ${{ github.event.pull_request.base.sha || github.sha }}
         run: |
           NOW="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           cat > .pages-deployment.json <<EOF
