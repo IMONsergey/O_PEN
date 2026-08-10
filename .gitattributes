@@ -1,0 +1,2 @@
+# O_PEN playground mirror: external OpenPencil Git LFS is intentionally disabled.
+# Heavy test fixtures are excluded during bootstrap; runtime CanvasKit assets are stored normally.
